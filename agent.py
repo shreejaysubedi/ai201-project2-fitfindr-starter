@@ -2,7 +2,7 @@
 
 import re
 
-from tools import ERROR_PREFIX, FALLBACK_PREFIX, NOTICE_PREFIX, ToolError, create_fit_card, search_listings, suggest_outfit
+from tools import ERROR_PREFIX, FALLBACK_PREFIX, NOTICE_PREFIX, ToolError, compare_price, create_fit_card, search_listings, suggest_outfit
 
 _PRICE = re.compile(r"(?:\b(?:under|below|less than|up to|at most|max(?:imum)?(?: price)?|budget(?: of)?)\s*[:=]?\s*\$?\s*|\$\s*)(-?\d+(?:\.\d+)?)", re.I)
 _SIZE = re.compile(r"\bsize\s*[:=]?\s*((?:US|UK|EU)\s*\d+(?:\.\d+)?|W\d+(?:\s+L\d+)?|(?:XXXS|XXS|XXXL|XXL|XS|XL|S|M|L)(?:/(?:XXXS|XXS|XXXL|XXL|XS|XL|S|M|L))?|\d+(?:\.\d+)?|one\s+size)\b", re.I)
@@ -13,6 +13,7 @@ def _new_session(query: str, wardrobe: dict) -> dict:
         'query': query, 'parsed': {}, 'search_results': [], 'selected_item': None,
         'wardrobe': wardrobe, 'outfit_suggestion': None, 'fit_card': None,
         'error': None, 'notices': [], 'steps': [],
+        'price_comparison': None, 'search_attempts': [], 'retry_used': False,
     }
 
 
@@ -74,13 +75,21 @@ def run_agent(query: str, wardrobe: dict) -> dict:
     while not session['fit_card'] and not session['error']:
         try:
             if not session['search_results']:
-                args = session['parsed']
+                args = session['parsed'].copy()
+                if session['search_attempts']:
+                    args['size'] = None
+                    session['retry_used'] = True
+                    session['notices'].append('No exact size match. Searching other sizes within your budget; check the listed size before buying.')
                 session['search_results'] = search_listings(**args)
+                session['search_attempts'].append({'filters': args.copy(), 'match_count': len(session['search_results'])})
                 session['steps'].append({'tool': 'search_listings', 'status': 'done', 'inputs': args.copy(), 'detail': f"Found {len(session['search_results'])} matches."})
-                if not session['search_results']:
+                if not session['search_results'] and (args['size'] is None or session['retry_used']):
                     session['error'] = 'No matches in the sample listings. Try a broader item name, another size, or a higher budget.'
             elif session['selected_item'] is None:
                 session['selected_item'] = session['search_results'][0]
+            elif session['price_comparison'] is None:
+                session['price_comparison'] = compare_price(session['selected_item'])
+                session['steps'].append({'tool': 'compare_price', 'status': session['price_comparison']['verdict'], 'detail': session['price_comparison']['message']})
             elif session['outfit_suggestion'] is None:
                 _accept_text(session, 'suggest_outfit', 'outfit_suggestion', suggest_outfit(session['selected_item'], session['wardrobe']))
             else:

@@ -177,3 +177,20 @@ def test_empty_ai_reply(monkeypatch, item):
     monkeypatch.setattr(tools, '_get_groq_client', lambda: client)
     assert 'no usable text' in tools.suggest_outfit(item, get_example_wardrobe())
     assert 'no usable text' in tools.create_fit_card('Jeans and boots.', item)
+
+
+def test_timeout_uses_local_text(monkeypatch, item):
+    from groq import APITimeoutError
+    def fail(*args):
+        raise APITimeoutError(request=httpx.Request('POST', 'https://api.groq.com'))
+    monkeypatch.setattr(tools, '_generate', fail)
+    assert tools.suggest_outfit(item, get_empty_wardrobe()).startswith('Fallback:')
+    assert tools.create_fit_card('Jeans and boots.', item).startswith('Fallback:')
+
+
+def test_bad_style_tags_do_not_crash(item):
+    broken = dict(item, style_tags=None)
+    assert tools.suggest_outfit(broken, get_example_wardrobe()).startswith('Error:')
+    assert tools.create_fit_card('Jeans and boots.', broken).startswith('Error:')
+    wardrobe = {'items': [{'name': 'jeans', 'category': 'bottoms', 'style_tags': None}]}
+    assert tools.suggest_outfit(item, wardrobe).startswith('Error:')

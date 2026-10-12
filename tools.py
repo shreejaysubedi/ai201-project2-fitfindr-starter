@@ -6,6 +6,7 @@ import os
 import random
 import re
 from pathlib import Path
+from statistics import median
 
 from dotenv import load_dotenv
 from groq import APIError, Groq
@@ -65,6 +66,8 @@ def _validate_item(item: dict) -> str | None:
         return "The listing needs a valid price. Choose another listing."
     if item["category"] not in {"tops", "bottoms", "outerwear", "shoes", "accessories"}:
         return "The listing has an unknown clothing category. Choose another listing."
+    if 'style_tags' in item and (not isinstance(item['style_tags'], list) or any(not isinstance(tag, str) for tag in item['style_tags'])):
+        return "The listing needs a list of style tags. Choose another listing."
     return None
 
 
@@ -128,12 +131,15 @@ def _generate(prompt: str, temperature: float) -> tuple[str, str | None]:
         {"role": "user", "content": prompt},
     ]
     notice = None
+    def request(chosen_model):
+        options = {"extra_body": {"reasoning_effort": "low"}} if "gpt-oss" in chosen_model else {}
+        return client.chat.completions.create(model=chosen_model, messages=messages, temperature=temperature, max_tokens=1200, **options)
     try:
-        response = client.chat.completions.create(model=model, messages=messages, temperature=temperature, max_tokens=400)
+        response = request(model)
     except APIError as exc:
         if not _model_unavailable(exc) or model == fallback_model:
             raise
-        response = client.chat.completions.create(model=fallback_model, messages=messages, temperature=temperature, max_tokens=400)
+        response = request(fallback_model)
         notice = f"The course model is unavailable. Used {fallback_model} instead."
     try:
         text = response.choices[0].message.content
@@ -189,12 +195,16 @@ def suggest_outfit(new_item: dict, wardrobe: dict) -> str:
         return f"{ERROR_PREFIX} Your wardrobe needs an items list. Choose the example wardrobe or add your clothes."
     if any(not isinstance(piece, dict) or not isinstance(piece.get("name"), str) or not piece["name"].strip() for piece in wardrobe["items"]):
         return f"{ERROR_PREFIX} Each wardrobe piece needs a name. Fix it and try again."
+    if any(piece.get('category') not in {'tops', 'bottoms', 'outerwear', 'shoes', 'accessories'} or not isinstance(piece.get('style_tags', []), list) or any(not isinstance(tag, str) for tag in piece.get('style_tags', [])) for piece in wardrobe['items']):
+        return f"{ERROR_PREFIX} Each wardrobe piece needs a valid category and a list of style tags."
     if not isinstance(wardrobe.get("style_preferences", ""), str):
         return f"{ERROR_PREFIX} Your style preferences must be text."
     prompt = (
-        "Suggest 1–2 complete outfits using this find and the named owned clothes. "
+        "Suggest one complete outfit using this find and the named owned clothes. "
         "Include a top, bottom, and shoes (or a dress and shoes), plus one styling tip. "
-        "Respect the style preferences. Keep it under 100 words. "
+        "Use exact wardrobe names. Respect the style preferences. Keep it under 80 words. "
+        "Use short, plain sentences, with no headings or lists. "
+        "The find is being considered for purchase; never label the find as owned. "
         "If owned clothes are missing, label added pieces 'Suggested extras'; never claim they are owned.\n"
         + json.dumps({"new_item": new_item, "wardrobe": wardrobe}, ensure_ascii=False)
     )
@@ -237,5 +247,36 @@ def create_fit_card(outfit: str, new_item: dict) -> str:
         pairing = pairing.split(". Keep the layers")[0].removeprefix("Wear ").rstrip(".")
         if pairing.startswith(new_item["title"] + " with "):
             pairing = "Styled with " + pairing[len(new_item["title"] + " with "):]
+        pairing = ' '.join(re.split(r'(?<=[.!?])\s+', pairing)[:2]).rstrip('.!?')
         caption = f"{opening}: {new_item['title']} for ${new_item['price']:g} on {new_item['platform']}. {pairing}. #SecondhandStyle"
         return f"{FALLBACK_PREFIX} {_failure_reason(exc)} Using a local caption.\n\n{caption}"
+
+
+def compare_price(new_item: dict) -> dict:
+    """Estimate value using similar sample listings, excluding this item."""
+    result = {'verdict': 'unavailable', 'median_price': None, 'comparable_count': 0, 'comparable_ids': [], 'message': ''}
+    problem = _validate_item(new_item)
+    if problem:
+        result['message'] = problem
+        return result
+    try:
+        candidates = [item for item in load_listings() if item.get('id') != new_item.get('id') and item.get('category') == new_item['category']]
+        if any(_validate_item(item) for item in candidates):
+            raise ToolError('Incomplete comparison data.')
+        kinds = _words(new_item['title']) & _ITEM_KINDS
+        similar = [item for item in candidates if kinds & (_words(item['title']) | _words(' '.join(item.get('style_tags', []))))]
+        if not similar:
+            tags = set(new_item.get('style_tags', []))
+            similar = [item for item in candidates if tags & set(item.get('style_tags', []))]
+        result['comparable_count'] = len(similar)
+        result['comparable_ids'] = [item['id'] for item in similar]
+        if len(similar) < 2:
+            result.update(verdict='not enough data', message='Too few similar sample listings for a fair price check.')
+            return result
+        typical = float(median(item['price'] for item in similar))
+        price = new_item['price']
+        verdict = 'below typical' if price < typical * 0.8 else 'above typical' if price > typical * 1.2 else 'fair'
+        result.update(verdict=verdict, median_price=typical, message=f"Price looks {verdict} against {len(similar)} similar sample listings (median ${typical:g}). This is a rough estimate; shipping and fit are not included.")
+    except (OSError, ValueError, TypeError, AttributeError, KeyError):
+        result['message'] = 'Price check unavailable. Check the sample listings; you can still view the outfit.'
+    return result

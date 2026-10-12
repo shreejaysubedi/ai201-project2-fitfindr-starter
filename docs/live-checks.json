@@ -1,0 +1,509 @@
+{
+  "full_workflow": {
+    "query": "I'm looking for a vintage graphic tee under $30. I mostly wear baggy jeans and chunky sneakers. What's out there and how would I style it?",
+    "parsed": {
+      "description": "vintage graphic tee",
+      "size": null,
+      "max_price": 30.0
+    },
+    "search_results": [
+      {
+        "id": "lst_033",
+        "title": "Vintage Band Tee — Faded Grey",
+        "description": "Faded grey band-style tee with distressed graphic. Crew neck. Fits boxy. Well-loved but no holes or major damage.",
+        "category": "tops",
+        "style_tags": [
+          "vintage",
+          "grunge",
+          "band tee",
+          "graphic tee",
+          "streetwear"
+        ],
+        "size": "L",
+        "condition": "fair",
+        "price": 19.0,
+        "colors": [
+          "grey",
+          "charcoal"
+        ],
+        "brand": null,
+        "platform": "depop"
+      },
+      {
+        "id": "lst_006",
+        "title": "Graphic Tee — 2003 Tour Bootleg Style",
+        "description": "Vintage-style bootleg tee with faded graphic. Slightly boxy fit. 100% cotton, soft and worn-in.",
+        "category": "tops",
+        "style_tags": [
+          "graphic tee",
+          "vintage",
+          "grunge",
+          "streetwear",
+          "band tee"
+        ],
+        "size": "L",
+        "condition": "good",
+        "price": 24.0,
+        "colors": [
+          "black"
+        ],
+        "brand": null,
+        "platform": "depop"
+      },
+      {
+        "id": "lst_002",
+        "title": "Y2K Baby Tee — Butterfly Print",
+        "description": "Super cute early 2000s baby tee with butterfly graphic. Fitted crop length. Tag says medium but fits like a small.",
+        "category": "tops",
+        "style_tags": [
+          "y2k",
+          "vintage",
+          "graphic tee",
+          "cottagecore"
+        ],
+        "size": "S/M",
+        "condition": "excellent",
+        "price": 18.0,
+        "colors": [
+          "white",
+          "pink",
+          "purple"
+        ],
+        "brand": null,
+        "platform": "depop"
+      }
+    ],
+    "selected_item": {
+      "id": "lst_033",
+      "title": "Vintage Band Tee — Faded Grey",
+      "description": "Faded grey band-style tee with distressed graphic. Crew neck. Fits boxy. Well-loved but no holes or major damage.",
+      "category": "tops",
+      "style_tags": [
+        "vintage",
+        "grunge",
+        "band tee",
+        "graphic tee",
+        "streetwear"
+      ],
+      "size": "L",
+      "condition": "fair",
+      "price": 19.0,
+      "colors": [
+        "grey",
+        "charcoal"
+      ],
+      "brand": null,
+      "platform": "depop"
+    },
+    "wardrobe": {
+      "items": [
+        {
+          "id": "w_001",
+          "name": "Baggy straight-leg jeans, dark wash",
+          "category": "bottoms",
+          "colors": [
+            "dark blue",
+            "indigo"
+          ],
+          "style_tags": [
+            "denim",
+            "streetwear",
+            "baggy"
+          ],
+          "notes": "High-waisted, sits above the hip"
+        },
+        {
+          "id": "w_002",
+          "name": "Wide-leg khaki trousers",
+          "category": "bottoms",
+          "colors": [
+            "khaki",
+            "tan"
+          ],
+          "style_tags": [
+            "earth tones",
+            "minimal",
+            "wide-leg"
+          ],
+          "notes": null
+        },
+        {
+          "id": "w_003",
+          "name": "White ribbed tank top",
+          "category": "tops",
+          "colors": [
+            "white"
+          ],
+          "style_tags": [
+            "basics",
+            "minimal",
+            "fitted"
+          ],
+          "notes": "Goes with everything"
+        },
+        {
+          "id": "w_004",
+          "name": "Oversized grey crewneck sweatshirt",
+          "category": "tops",
+          "colors": [
+            "grey",
+            "charcoal"
+          ],
+          "style_tags": [
+            "oversized",
+            "basics",
+            "cozy"
+          ],
+          "notes": "Really oversized — drops below the hip"
+        },
+        {
+          "id": "w_005",
+          "name": "Black cropped zip hoodie",
+          "category": "tops",
+          "colors": [
+            "black"
+          ],
+          "style_tags": [
+            "athletic",
+            "streetwear",
+            "cropped"
+          ],
+          "notes": null
+        },
+        {
+          "id": "w_006",
+          "name": "Vintage black denim jacket",
+          "category": "outerwear",
+          "colors": [
+            "black"
+          ],
+          "style_tags": [
+            "denim",
+            "vintage",
+            "classic"
+          ],
+          "notes": "Slightly cropped"
+        },
+        {
+          "id": "w_007",
+          "name": "Chunky white sneakers",
+          "category": "shoes",
+          "colors": [
+            "white"
+          ],
+          "style_tags": [
+            "sneakers",
+            "chunky",
+            "streetwear"
+          ],
+          "notes": null
+        },
+        {
+          "id": "w_008",
+          "name": "Black combat boots",
+          "category": "shoes",
+          "colors": [
+            "black"
+          ],
+          "style_tags": [
+            "boots",
+            "grunge",
+            "classic"
+          ],
+          "notes": "Lace-up, mid-ankle height"
+        },
+        {
+          "id": "w_009",
+          "name": "Brown leather belt",
+          "category": "accessories",
+          "colors": [
+            "brown"
+          ],
+          "style_tags": [
+            "classic",
+            "earth tones",
+            "accessories"
+          ],
+          "notes": null
+        },
+        {
+          "id": "w_010",
+          "name": "Black crossbody bag",
+          "category": "accessories",
+          "colors": [
+            "black"
+          ],
+          "style_tags": [
+            "minimal",
+            "accessories",
+            "everyday"
+          ],
+          "notes": null
+        }
+      ]
+    },
+    "outfit_suggestion": "Pair the Vintage Band Tee — Faded Grey with the Baggy straight‑leg jeans, dark wash. Add the Black combat boots. Slip on the Black crossbody bag for extra utility. Tuck the tee slightly into the front of the jeans to show the waist and keep the look balanced.",
+    "fit_card": "Rocking the Vintage Band Tee — Faded Grey from Depop for $19, I tuck it just at the front of dark‑wash baggy straight‑leg jeans. Black combat boots keep the vibe gritty, while a black crossbody bag adds utility. The look feels balanced and effortlessly grunge.",
+    "error": null,
+    "notices": [
+      "Notice: The course model is unavailable. Used openai/gpt-oss-120b instead.",
+      "Notice: The course model is unavailable. Used openai/gpt-oss-120b instead."
+    ],
+    "steps": [
+      {
+        "tool": "search_listings",
+        "status": "done",
+        "inputs": {
+          "description": "vintage graphic tee",
+          "size": null,
+          "max_price": 30.0
+        },
+        "detail": "Found 3 matches."
+      },
+      {
+        "tool": "compare_price",
+        "status": "fair",
+        "detail": "Price looks fair against 2 similar sample listings (median $21). This is a rough estimate; shipping and fit are not included."
+      },
+      {
+        "tool": "suggest_outfit",
+        "status": "model fallback",
+        "detail": "Saved outfit_suggestion."
+      },
+      {
+        "tool": "create_fit_card",
+        "status": "model fallback",
+        "detail": "Saved fit_card."
+      }
+    ],
+    "price_comparison": {
+      "verdict": "fair",
+      "median_price": 21.0,
+      "comparable_count": 2,
+      "comparable_ids": [
+        "lst_002",
+        "lst_006"
+      ],
+      "message": "Price looks fair against 2 similar sample listings (median $21). This is a rough estimate; shipping and fit are not included."
+    },
+    "search_attempts": [
+      {
+        "filters": {
+          "description": "vintage graphic tee",
+          "size": null,
+          "max_price": 30.0
+        },
+        "match_count": 3
+      }
+    ],
+    "retry_used": false
+  },
+  "second_caption_result": "Notice: The course model is unavailable. Used openai/gpt-oss-120b instead.\n\nRocking the Vintage Band Tee — Faded Grey from Depop at $19, I tuck the boxy tee into the front of dark‑wash baggy straight‑leg jeans. Black combat boots ground the grunge vibe, while the black crossbody adds practical edge. The look feels effortlessly balanced.",
+  "empty_wardrobe_outfit": "Notice: The course model is unavailable. Used openai/gpt-oss-120b instead.\n\nPair the Vintage Band Tee with black ripped skinny jeans and black combat boots. Tuck the tee slightly at the front for a relaxed shape. Add a thin silver chain for a subtle edge. Keep the look casual and grunge. Styling tip: Roll the jeans cuff a bit to show the boots and add visual interest.",
+  "failed_search": {
+    "query": "designer ballgown size XXS under $5",
+    "parsed": {
+      "description": "designer ballgown",
+      "size": "XXS",
+      "max_price": 5.0
+    },
+    "search_results": [],
+    "selected_item": null,
+    "wardrobe": {
+      "items": [
+        {
+          "id": "w_001",
+          "name": "Baggy straight-leg jeans, dark wash",
+          "category": "bottoms",
+          "colors": [
+            "dark blue",
+            "indigo"
+          ],
+          "style_tags": [
+            "denim",
+            "streetwear",
+            "baggy"
+          ],
+          "notes": "High-waisted, sits above the hip"
+        },
+        {
+          "id": "w_002",
+          "name": "Wide-leg khaki trousers",
+          "category": "bottoms",
+          "colors": [
+            "khaki",
+            "tan"
+          ],
+          "style_tags": [
+            "earth tones",
+            "minimal",
+            "wide-leg"
+          ],
+          "notes": null
+        },
+        {
+          "id": "w_003",
+          "name": "White ribbed tank top",
+          "category": "tops",
+          "colors": [
+            "white"
+          ],
+          "style_tags": [
+            "basics",
+            "minimal",
+            "fitted"
+          ],
+          "notes": "Goes with everything"
+        },
+        {
+          "id": "w_004",
+          "name": "Oversized grey crewneck sweatshirt",
+          "category": "tops",
+          "colors": [
+            "grey",
+            "charcoal"
+          ],
+          "style_tags": [
+            "oversized",
+            "basics",
+            "cozy"
+          ],
+          "notes": "Really oversized — drops below the hip"
+        },
+        {
+          "id": "w_005",
+          "name": "Black cropped zip hoodie",
+          "category": "tops",
+          "colors": [
+            "black"
+          ],
+          "style_tags": [
+            "athletic",
+            "streetwear",
+            "cropped"
+          ],
+          "notes": null
+        },
+        {
+          "id": "w_006",
+          "name": "Vintage black denim jacket",
+          "category": "outerwear",
+          "colors": [
+            "black"
+          ],
+          "style_tags": [
+            "denim",
+            "vintage",
+            "classic"
+          ],
+          "notes": "Slightly cropped"
+        },
+        {
+          "id": "w_007",
+          "name": "Chunky white sneakers",
+          "category": "shoes",
+          "colors": [
+            "white"
+          ],
+          "style_tags": [
+            "sneakers",
+            "chunky",
+            "streetwear"
+          ],
+          "notes": null
+        },
+        {
+          "id": "w_008",
+          "name": "Black combat boots",
+          "category": "shoes",
+          "colors": [
+            "black"
+          ],
+          "style_tags": [
+            "boots",
+            "grunge",
+            "classic"
+          ],
+          "notes": "Lace-up, mid-ankle height"
+        },
+        {
+          "id": "w_009",
+          "name": "Brown leather belt",
+          "category": "accessories",
+          "colors": [
+            "brown"
+          ],
+          "style_tags": [
+            "classic",
+            "earth tones",
+            "accessories"
+          ],
+          "notes": null
+        },
+        {
+          "id": "w_010",
+          "name": "Black crossbody bag",
+          "category": "accessories",
+          "colors": [
+            "black"
+          ],
+          "style_tags": [
+            "minimal",
+            "accessories",
+            "everyday"
+          ],
+          "notes": null
+        }
+      ]
+    },
+    "outfit_suggestion": null,
+    "fit_card": null,
+    "error": "No matches in the sample listings. Try a broader item name, another size, or a higher budget.",
+    "notices": [
+      "No exact size match. Searching other sizes within your budget; check the listed size before buying."
+    ],
+    "steps": [
+      {
+        "tool": "search_listings",
+        "status": "done",
+        "inputs": {
+          "description": "designer ballgown",
+          "size": "XXS",
+          "max_price": 5.0
+        },
+        "detail": "Found 0 matches."
+      },
+      {
+        "tool": "search_listings",
+        "status": "done",
+        "inputs": {
+          "description": "designer ballgown",
+          "size": null,
+          "max_price": 5.0
+        },
+        "detail": "Found 0 matches."
+      }
+    ],
+    "price_comparison": null,
+    "search_attempts": [
+      {
+        "filters": {
+          "description": "designer ballgown",
+          "size": "XXS",
+          "max_price": 5.0
+        },
+        "match_count": 0
+      },
+      {
+        "filters": {
+          "description": "designer ballgown",
+          "size": null,
+          "max_price": 5.0
+        },
+        "match_count": 0
+      }
+    ],
+    "retry_used": true
+  },
+  "missing_outfit_result": "Error: Add an outfit before making a fit card."
+}

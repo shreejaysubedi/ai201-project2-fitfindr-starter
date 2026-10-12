@@ -153,7 +153,7 @@ jeans and chunky sneakers. What's out there and how would I style it?”
 1. Extract `description="vintage graphic tee"`, `size=None`, `max_price=30.0`.
    Call `search_listings("vintage graphic tee", None, 30.0)`.
 2. Store ranked results. The expected first match is `lst_033`, Vintage Band
-   Tee — Faded Grey, $19, size L, good condition, depop. Set `selected_item`
+   Tee — Faded Grey, $19, size L, fair condition, depop. Set `selected_item`
    to that dict without re-entering its fields.
 3. Call `suggest_outfit(selected_item, get_example_wardrobe())`. Save an outfit
    such as the tee with Baggy straight-leg jeans, dark wash, and Chunky white
@@ -170,7 +170,7 @@ Groq [retired it on July 17, 2026](https://console.groq.com/docs/deprecations).
 On a model-unavailable response, retry once with `openai/gpt-oss-120b`, Groq's
 recommended replacement, and show a notice. `GROQ_MODEL` and
 `GROQ_FALLBACK_MODEL` in `.env` can change these choices. Use a 20-second
- timeout and no hidden SDK retries.
+timeout and no hidden SDK retries.
 
 ## Stretch update — written before stretch code
 
