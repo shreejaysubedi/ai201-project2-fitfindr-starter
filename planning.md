@@ -171,3 +171,72 @@ On a model-unavailable response, retry once with `openai/gpt-oss-120b`, Groq's
 recommended replacement, and show a notice. `GROQ_MODEL` and
 `GROQ_FALLBACK_MODEL` in `.env` can change these choices. Use a 20-second
  timeout and no hidden SDK retries.
+
+## Stretch update — written before stretch code
+
+### Price comparison tool
+
+`compare_price(new_item: dict) -> dict` accepts the selected listing.
+Compare against other listings of the same clothing kind and category; if there
+are none, use same-category pieces with shared style tags. Exclude the item
+itself. Return `verdict` (str), `median_price` (float or None),
+`comparable_count` (int), `comparable_ids` (list[str]), and `message` (str).
+With at least two matches, use the median: below 80% is `below typical`, above
+120% is `above typical`, otherwise `fair`. With fewer matches, return
+`not enough data`; bad input/data returns `unavailable`. The message names the
+sample-data limit. Store `price_comparison` after selecting a listing; a failed
+comparison must not block styling. Test all verdicts and item exclusion.
+
+### Search retry
+
+Track `search_attempts` (list[dict]) and `retry_used` (bool). If the first search
+is empty and a size was given, retry once with `size=None`, keeping the original
+item description and budget. Show “No exact size match. Searching other sizes
+within your budget; check the listed size before buying.” Keep the original
+filters in `parsed` and record changed filters in the second attempt. If that
+also fails, stop. Never raise the user's budget. Tests must show two attempts,
+a visible notice, preserved budget, and no later tools if both fail.
+
+### Style profile memory
+
+Use Gradio BrowserState to save `wardrobe_choice`, `wardrobe_text`, and
+`style_preferences` in this browser. An explicit “Save my style” button saves
+it; page load restores it across app sessions. A clear button removes it.
+No shared server file: one browser cannot overwrite another browser's closet.
+“Add my clothes” accepts one named piece per line, with its category, such as
+`bottoms: baggy blue jeans`. Build schema-shaped wardrobe dicts for the tools.
+Preferences go into `wardrobe['style_preferences']`, so they reach the AI prompt.
+Check profile save/restore and invalid wardrobe text in tests and the browser.
+
+### Updated loop and state
+
+Add a price-comparison branch after `selected_item` exists and before styling.
+Run the size retry only after the first empty search. The remaining stop/fallback
+rules stay as above. Add the three fields `price_comparison`, `search_attempts`,
+and `retry_used`. BrowserState holds only profile settings, not prior query results.
+
+```mermaid
+flowchart TD
+    B[Saved browser style] -->|wardrobe and preferences| U[User request]
+    U -->|query and wardrobe| P[Planning loop]
+    P <-->|filters, attempts, results, price, outfit, card| S[Session state]
+    P -->|description, size, budget| L[search_listings]
+    L -->|no results with size| R[Retry once without size]
+    R -->|same description and budget| L
+    L -->|still empty or data error| E[Helpful message and stop]
+    L -->|listing dicts| S
+    P -->|selected_item| V[compare_price]
+    V -->|estimate or unavailable message| S
+    P -->|selected_item and wardrobe| O[suggest_outfit]
+    O -->|outfit or marked fallback| S
+    O -->|invalid input| E
+    P -->|outfit and selected_item| C[create_fit_card]
+    C -->|caption or marked fallback| S
+    C -->|invalid input| E
+    S -->|listing, outfit, card, notices, history| U
+```
+
+**AI plan:** Give Codex this Stretch update and diagram before editing the tools,
+loop, or app. Check price comparisons against hand-made prices, retries against
+mocked calls, and profiles against browser refresh. Trend awareness is left out;
+this project makes no claim about current fashion posts.
