@@ -13,11 +13,16 @@ Python 3.10 or newer:
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-cp .env.example .env
 ```
 
 On Windows, activate with `.venv\Scripts\activate`.
-Add your Groq key to `.env`, then run:
+Create a `.env` file in the repo root with your Groq key:
+
+```text
+GROQ_API_KEY=your_key_here
+```
+
+Then run:
 
 ```bash
 python app.py
@@ -30,7 +35,8 @@ captions. Those fallbacks are not AI replies.
 The course model is `meta-llama/llama-4-scout-17b-16e-instruct`.
 Groq [retired it on July 17, 2026](https://console.groq.com/docs/deprecations),
 so the app tries it first, then uses `openai/gpt-oss-120b` if unavailable.
-The app shows the switch. Optional `.env` settings are in `.env.example`.
+The app shows the switch. Optional `.env` settings are `GROQ_MODEL` and
+`GROQ_FALLBACK_MODEL`.
 
 ## Use it
 
@@ -160,7 +166,7 @@ python utils/data_loader.py
 
 Tests cover filters, every tool's failure path, retries, profile settings, and
 state passing. Groq replies are mocked in tests; live checks are separate.
-See [check results](docs/checks.md) and the saved [failure screenshot](docs/no-results.jpg).
+See the saved [failure screenshot](docs/no-results.jpg).
 
 ## Spec reflection
 
@@ -175,14 +181,12 @@ model also needed a visible replacement path.
 
 ## AI use
 
-- Codex received the assignment, Tool blocks, Error Handling, and loader to build
-  the individual functions and tests. Review added stricter clothing-kind checks
-  so a tee request would not select jeans just because both were vintage.
-- Codex used Planning Loop, State Management, and the Mermaid diagram to connect
-  the tools. Review kept notices separate from captions and preserved completed
-  results when a later tool failed.
-- Live review found a reply cut short by the replacement model. The response
-  limit was raised and its reasoning setting lowered, then real replies were rechecked.
+- Codex used the tool specs, error-handling plan, and data loader to build
+  the tools and tests. Review tightened clothing-kind checks so a tee search
+  would not select jeans just because both were vintage.
+- Codex used the planning loop, state section, and Mermaid diagram to connect
+  the tools. Review kept warning text out of captions and preserved completed
+  results when a later step failed.
 
 ## Extra features
 
