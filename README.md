@@ -179,15 +179,6 @@ retries once without size, while keeping the budget and explaining the change.
 That stretch update was added to the plan before its code. The retired course
 model also needed a visible replacement path.
 
-## AI use
-
-- Codex used the tool specs, error-handling plan, and data loader to build
-  the tools and tests. Review tightened clothing-kind checks so a tee search
-  would not select jeans just because both were vintage.
-- Codex used the planning loop, state section, and Mermaid diagram to connect
-  the tools. Review kept warning text out of captions and preserved completed
-  results when a later step failed.
-
 ## Extra features
 
 Price comparison, saved style profiles, and one search retry are implemented.

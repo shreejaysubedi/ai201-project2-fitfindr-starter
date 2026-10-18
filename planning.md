@@ -120,26 +120,6 @@ flowchart TD
     E -->|what to try next| U
 ```
 
-## AI Tool Plan
-
-- **Milestone 1:** Give Codex the assignment, data, and loader. Check its summary
-  against the 40 listings and the wardrobe fields.
-- **Milestone 2:** Give Codex the signatures and starter plan. Review this plan's
-  exact inputs, outputs, branches, and diagram before writing code.
-- **Milestone 3:** Give Codex each Tool block, Error Handling, and the loader,
-  one tool at a time. Build in `tools.py`. Check filters, no results, empty
-  wardrobe, missing outfit, and mocked AI failures using
-  `python -m pytest tests/test_tools.py` before connecting the loop.
-- **Milestone 4:** Give Codex Planning Loop, State Management, and the full
-  Architecture diagram. Build `agent.py` and connect `app.py`. Tests must show
-  the same item reaches both tools, the saved outfit reaches the card, and
-  no-result runs skip styling and captions.
-- **Milestone 5:** Give Codex the Error Handling rows. Trigger each failure;
-  check the visible message and early stop. Save test evidence.
-- **Milestone 6:** Give Codex the final code, plan, and test results. Write a
-  short README and compare every signature with code. Check all app panels
-  in a browser. The user will record and link the video later.
-
 ## A Complete Interaction (Step by Step)
 
 FitFindr finds a secondhand piece, pairs it with owned clothes, and writes a
@@ -236,7 +216,5 @@ flowchart TD
     S -->|listing, outfit, card, notices, history| U
 ```
 
-**AI plan:** Give Codex this Stretch update and diagram before editing the tools,
-loop, or app. Check price comparisons against hand-made prices, retries against
-mocked calls, and profiles against browser refresh. Trend awareness is left out;
-this project makes no claim about current fashion posts.
+**Checks:** Compare sample prices by hand, verify retry filters in tests, and
+check saved preferences after browser refresh. Trend awareness is not included.
